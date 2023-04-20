@@ -1,7 +1,7 @@
 package com.ms.gestionchefProjetservice.service;
 
 import java.sql.SQLException;
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,8 +19,12 @@ public class ChefProjetService {
         return  chefProjetRepository.findById(id).get();
     }
 
-    public List<ChefProjet> getAllChefProjet()throws SQLException{
-        return chefProjetRepository.findAll();
+    public ChefProjet getChefProjetByEmail(String email) throws SQLException{
+        return chefProjetRepository.findByEmail(email);
+    }
+
+    public ChefProjet ajouterChefProjet(ChefProjet chp){
+        return this.chefProjetRepository.save(chp);
     }
 
 

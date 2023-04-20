@@ -20,12 +20,13 @@ public abstract class Personne {
     private String prenom; //prenom d'un personne
     private String adresse ;//adresse d'un personne
     private String telephone ; //telephone d'un personne
+    @Column(unique = true)
     private String email ;//email d'un personne
     @Column(name="password")
     private String pwd ;//password d'un personne
     @Column(name="date_inscription")
     private Date dateInscription ;//date inscription d'un personne
-    @Column(unique = true)
+    
     private String username;//le nom d'utilisateur 
 
 }

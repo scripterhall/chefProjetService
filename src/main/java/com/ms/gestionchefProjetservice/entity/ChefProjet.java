@@ -28,4 +28,6 @@ public class ChefProjet extends Personne {
     private boolean competanceAnalyseDonnees;//confirmation de niveau sur quelle point
     @Column(name="competance_de_gestion")
     private boolean competanceDeGestion;//confirmation de niveau
+    @Column
+    private byte[] photo;
 }

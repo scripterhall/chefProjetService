@@ -1,15 +1,16 @@
 package com.ms.gestionchefProjetservice.controller;
 
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ms.gestionchefProjetservice.entity.ChefProjet;
@@ -45,14 +46,23 @@ public class ChefProjetController {
 
 
     @GetMapping
-    public List<ChefProjet> getAll(){
+    public ChefProjet getChefProjetByEmail(@RequestParam("email") String email){
         try {
-            return this.chefProjetService.getAllChefProjet();
+            return this.chefProjetService.getChefProjetByEmail(email);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return Collections.emptyList();
+        return null;
     }
+
+    @PostMapping
+    public ChefProjet ajoutChefProjet(@RequestBody ChefProjet chp){
+        if(chp==null)
+            return null;
+        return this.chefProjetService.ajouterChefProjet(chp);
+    }
+
+
 
 }
