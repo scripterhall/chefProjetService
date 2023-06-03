@@ -83,7 +83,4 @@ public class ChefProjetController {
                 .body(chefProjetSaved);
 
     }
-
-
-
 }
