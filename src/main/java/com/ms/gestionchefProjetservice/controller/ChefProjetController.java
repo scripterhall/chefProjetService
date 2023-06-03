@@ -1,17 +1,16 @@
 package com.ms.gestionchefProjetservice.controller;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.ms.gestionchefProjetservice.classes.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ms.gestionchefProjetservice.entity.ChefProjet;
 import com.ms.gestionchefProjetservice.service.ChefProjetService;
@@ -23,6 +22,8 @@ public class ChefProjetController {
     @Autowired
     private ChefProjetService chefProjetService;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @GetMapping("/{id}")
     public ResponseEntity<ChefProjet> getChefProjetById(@PathVariable(name="id") Long id){
@@ -61,6 +62,26 @@ public class ChefProjetController {
         if(chp==null)
             return null;
         return this.chefProjetService.ajouterChefProjet(chp);
+    }
+    @PutMapping
+    @ResponseBody
+    public ResponseEntity<ChefProjet> modifierChefProjet(@RequestBody ChefProjet chefProjet) {
+        System.out.println(chefProjet.getPhoto());
+        ChefProjet chefProjetSaved = chefProjetService.ajouterChefProjet(chefProjet);
+
+        byte[] photo = chefProjetSaved.getPhoto();
+        String token = jwtTokenUtil.generateTokenChefProjet(chefProjetSaved.getEmail(), chefProjetSaved.getUsername(), chefProjetSaved.getId(),
+                chefProjetSaved.getAdresse(), chefProjetSaved.getNom(), chefProjetSaved.getPrenom(), chefProjetSaved.getTelephone(),
+                chefProjetSaved.getDateInscription(), "chefProjet", photo, chefProjetSaved.getPwd());
+
+
+        if (chefProjetSaved == null)
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .body(chefProjetSaved);
+
     }
 
 

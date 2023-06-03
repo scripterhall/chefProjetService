@@ -1,6 +1,8 @@
 package com.ms.gestionchefProjetservice.service;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,5 @@ public class ChefProjetService {
     public ChefProjet ajouterChefProjet(ChefProjet chp){
         return this.chefProjetRepository.save(chp);
     }
-
 
 }
